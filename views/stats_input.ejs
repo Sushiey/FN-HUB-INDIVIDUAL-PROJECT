@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Stats</title>
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="/navigation.css">
+
+
+    <link rel="stylesheet" href="/styles_index.css">
+    <link rel="stylesheet" href="/styles.css"> 
+    <link rel="stylesheet" href="/styles1.css">
+
+</head>
+<body>
+    <header>
+        <div class="logo">Fortnite Hub</div>
+        <nav id="banner-nav">
+            <ul class="main-links">
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                    <li class="dropdown"> 
+                        <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                        <div class="dropdown-content">
+                            <a href="/profile">Profile</a>
+                            <a href="/settings">Settings</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <button id="burger-menu-btn">&#9776;</button>
+        <nav id="burger-menu">
+            <ul>
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                    <li class="dropdown"> 
+                        <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                        <div class="dropdown-content">
+                            <a href="/profile">Profile</a>
+                            <a href="/settings">Settings</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <main>
+
+        <form action="/stats" method="POST" class="form-container">
+            <h2 class="form-title">Fortnite Search Player Stats</h2>
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" name="username" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="platform" class="form-label">Platform:</label>
+                <select id="platform" name="platform" class="form-select">
+                    <option value="pc">PC</option>
+                    <option value="ps4">PS4</option>
+                    <option value="xbox">Xbox</option>
+                </select>
+            </div>
+            <button type="submit" class="form-button">Get Stats</button>
+        </form>
+        
+    </main>
+    <footer>
+        <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const burgerButton = document.getElementById('burger-menu-btn');
+            const bannerNav = document.getElementById('banner-nav');
+
+            burgerButton.addEventListener('click', function() {
+                burgerMenu.classList.toggle('show');
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768) {
+                    bannerNav.style.display = 'none';
+                    burgerMenu.classList.add('show');
+                } else {
+                    bannerNav.style.display = 'block';
+                    burgerMenu.classList.remove('show');
+                }
+            });
+
+            if (window.innerWidth <= 768) {
+                bannerNav.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

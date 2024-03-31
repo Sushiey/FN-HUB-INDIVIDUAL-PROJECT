@@ -1,0 +1,27 @@
+{
+  "name": "fortnite-app",
+  "version": "1.0.0",
+  "description": "Basic web app makes use of Fortnite Tracker and FNBR APIs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Kaelduur",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "connect-flash": "^0.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.3",
+    "express-flash": "^0.0.2",
+    "express-rate-limit": "^7.2.0",
+    "express-session": "^1.18.0",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.12",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "request": "^2.88.2",
+    "sqlite3": "^5.1.7"
+  }
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FN Hub</title>
+    <link rel="stylesheet" href="/base.css"> 
+    <link rel="stylesheet" href="/navigation.css"> 
+    <link rel="stylesheet" href="/streams.css"> 
+
+    <link rel="stylesheet" href="/styles_index.css"> 
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Fortnite Hub</div>
+        <nav id="main-nav">
+            <ul class="main-links">
+                <li><a href="/" id="mainStatsLink">Home</a></li>
+                <li><a href="/stats" id="mainStatsLink">Stats</a></li>
+                <li><a href="/shop" id="mainShopLink">Item Shop</a></li>
+                <% if (loggedIn) { %> 
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                        <div class="dropdown-content">
+                            <a href="/profile">Profile</a>
+                            <a href="/settings">Settings</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </li>
+                <% } else { %> 
+                    <li><a href="/login">Login</a></li>
+                <% } %>                             
+            </ul>
+        </nav>
+        <button id="burger-menu-btn">&#9776;</button>
+        <nav id="burger-menu">
+            <ul>
+                <li><a href="/" id="burgerStatsLink">Home</a></li>
+                <li><a href="/stats" id="burgerStatsLink">Stats</a></li>
+                <li><a href="/shop" id="burgerShopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                        <div class="dropdown-content">
+                            <a href="/profile">Profile</a>
+                            <a href="/settings">Settings</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </li>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <main>      
+        <section id="pro-players">
+            <div id="stream-container" class="container pro-streams">
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const burgerMenu = document.getElementById('burger-menu');
+    const burgerButton = document.getElementById('burger-menu-btn');
+
+    burgerButton.addEventListener('click', function() {
+        burgerMenu.classList.toggle('show');
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            burgerMenu.classList.remove('show');
+        }
+    });
+});
+
+    </script>
+    
+
+    <script>
+        async function fetchProPlayerStreams() {
+            try {
+                const response = await fetch('/pro-player-streams');
+                const proPlayerStreams = await response.json();
+                return proPlayerStreams;
+            } catch (error) {
+                console.error('Error fetching pro player streams:', error);
+                return [];
+            }
+        }
+
+        async function displayProPlayerStreams() {
+            try {
+                const streamers = await fetchProPlayerStreams();
+                const streamContainer = document.getElementById('stream-container');
+                streamContainer.innerHTML = ''; 
+                for (const streamer of streamers) {
+                    if (streamer.is_live) {
+                        const streamDiv = document.createElement('div');
+                        streamDiv.classList.add('stream');
+                        const iframe = document.createElement('iframe');
+                        iframe.src = `https://player.twitch.tv/?channel=${streamer.username}&parent=localhost`;
+                        iframe.frameBorder = '0';
+                        iframe.allowFullscreen = 'true';
+                        iframe.scrolling = 'no';
+                        streamDiv.appendChild(iframe);
+                        streamContainer.appendChild(streamDiv);
+                    }
+                }
+            } catch (error) {
+                console.error('Error displaying pro player streams:', error);
+            }
+        }
+
+        window.onload = () => {
+            displayProPlayerStreams();
+        };
+    </script>
+
+    <% if (accountCreated) { %>
+    <script>
+        alert("Account created successfully!");
+    </script>
+    <% } %>
+
+    <script src="../app.js"></script>
+</body>
+</html>

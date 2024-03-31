@@ -1,0 +1,157 @@
+.item-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    margin: 80px auto 0;
+    margin-top: 15px;
+
+}
+
+.item-box {
+    width: 180px;
+    height: 180px;
+    margin: 7px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.frozen {
+    background-image: url('/rarity/frozen-gradient.png');
+}
+
+.lava {
+    background-image: url('/rarity/lava-gradient.png');
+}
+
+.legendary {
+    background-image: url('/rarity/legendary-gradient.png');
+}
+
+.lamborghini {
+    background-image: url('/rarity/lamborghini-gradient.png');
+}
+
+.mclaren {
+    background-image: url('/rarity/mclaren-gradient.png');
+}
+
+.dark {
+    background-image: url('/rarity/dark-gradient.png');
+}
+
+.marvel {
+    background-image: url('/rarity/marvel-gradient.png');
+}
+
+.dc {
+    background-image: url('/rarity/dc-gradient.png');
+}
+
+.star_wars {
+    background-image: url('/rarity/star-wars-gradient.png');
+}
+
+.gaming_legends {
+    background-image: url('/rarity/gaming-legends-gradient.png');
+}
+
+.icon_series {
+    background-image: url('/rarity/icon-series-gradient.png');
+}
+
+.slurp {
+    background-image: url('/rarity/slurp-gradient.png');
+}
+
+.shadow {
+    background-image: url('/rarity/shadow-gradient.png');
+}
+
+.epic {
+    background-image: url('/rarity/epic-gradient.png');
+}
+
+.rare {
+    background-image: url('/rarity/rare-gradient.png');
+}
+
+.uncommon {
+    background-image: url('/rarity/uncommon-gradient.png');
+}
+
+.common {
+    background-image: url('/rarity/common-gradient.png');
+}
+
+.item-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0;
+}
+
+.item-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 5px;
+    border-radius: 0 0 5px 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+    transform: translateY(100%);
+    z-index: 2; 
+}
+
+.item-box:hover {
+    transform: translateY(-5px);
+}
+
+.item-box:hover .item-details {
+    transform: translateY(0); 
+}
+
+.item-name {
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.item-price {
+    color: #00aeff;
+}
+
+.item-price img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+#countdownTimer {
+    font-size: 29px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 25px;
+}

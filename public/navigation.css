@@ -1,0 +1,157 @@
+header {
+    background-color: #1a1f2b;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 20px;
+    position: relative;
+}
+
+nav ul li:first-child {
+    margin-left: 0;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff0;
+    background-color: #333;
+}
+
+nav .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #1a1f2b;
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-top: 6px; 
+    margin-bottom: 15px; 
+    top: 100%;
+    left: 0;
+    padding: 15px 10px;
+}
+
+nav .dropdown-content a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+nav .dropdown-content a:last-child {
+    margin-bottom: 0;
+}
+
+nav .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#burger-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #1a1f2b;
+    width: auto;
+    padding: 10px;
+    z-index: 9999;
+}
+
+#burger-menu.show {
+    display: block;
+}
+
+#burger-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#burger-menu li {
+    padding: 10px 0;
+}
+
+#burger-menu li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#burger-menu li a:hover {
+    color: #ff0;
+}
+
+#burger-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    #main-nav {
+        display: none;
+    }
+
+    .user-menu {
+        display: none;
+    }
+
+    #burger-menu-btn {
+        display: block;
+    }
+
+    #burger-menu .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #1a1f2b;
+        min-width: 160px;
+        z-index: 1;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin-top: 0; 
+        top: 100%;
+        left: 0;
+    }
+
+    #burger-menu .dropdown:hover .dropdown-content {
+        display: block;
+    }
+}
+

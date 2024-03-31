@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="/navigation.css">
+    <link rel="stylesheet" href="/login.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Fortnite Tracker</div>
+        <nav id="banner-nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/stats">Stats</a></li>
+                <li><a href="/shop">Item Shop</a></li>
+                <li><a href="/login">Login</a></li>
+            </ul>
+        </nav>
+        <button id="burger-menu-btn">&#9776;</button>
+        <nav id="burger-menu">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/stats">Stats</a></li>
+                <li><a href="/shop">Item Shop</a></li>
+                <li><a href="/login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-form">
+            <h2 class="login-title">Create Account</h2>
+            <form action="/create-account" method="POST" class="login-group">
+                <label for="username" class="login-label">Username:</label>
+                <input type="text" id="username" name="username" class="login-input" required>
+                <label for="email" class="login-label">Email:</label>
+                <input type="email" id="email" name="email" class="login-input" required>
+                <label for="password" class="login-label">Password:</label>
+                <input type="password" id="password" name="password" class="login-input" required>
+                <button type="submit" class="login-button">Create Account</button>
+            </form>
+            <div class="links-below-form">
+                <a href="/login">Back to Login</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2024 Fortnite Tracker. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const burgerButton = document.getElementById('burger-menu-btn');
+            const bannerNav = document.getElementById('banner-nav');
+
+            burgerButton.addEventListener('click', function() {
+                burgerMenu.classList.toggle('show');
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768) {
+                    bannerNav.style.display = 'none';
+                    burgerMenu.classList.add('show');
+                } else {
+                    bannerNav.style.display = 'block';
+                    burgerMenu.classList.remove('show');
+                }
+            });
+
+            if (window.innerWidth <= 768) {
+                bannerNav.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

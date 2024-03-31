@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortnite Shop</title>
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="/navigation.css">
+    <link rel="stylesheet" href="/shop.css">
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles_index.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Fortnite Hub</div>
+        <nav id="banner-nav">
+            <ul>
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <button id="burger-menu-btn">&#9776;</button>
+        <nav id="burger-menu">
+            <ul>
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="featured-items">
+            <div id="countdownTimer"></div>
+            <script src="/countdown_timer.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    startCountdownTimer();
+                });
+            </script>
+
+            <div class="item-container">
+                <% featuredItems.forEach(item => { %>
+                    <div class="item-box <%= item.rarity.toLowerCase() %>">
+                        <div class="item-image">
+                            <img src="<%= item.images.icon %>" alt="<%= item.name %>">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name"><%= item.name %></div>
+                            <p class="item-price"><img src="/rarity/vbucks-icon.png" alt="V-Bucks"><%= item.price %> V-Bucks</p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+    </footer>
+
+    <script src="../app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const burgerButton = document.getElementById('burger-menu-btn');
+            const bannerNav = document.getElementById('banner-nav');
+
+            burgerButton.addEventListener('click', function() {
+                burgerMenu.classList.toggle('show');
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768) {
+                    bannerNav.style.display = 'none';
+                    burgerMenu.classList.add('show');
+                } else {
+                    bannerNav.style.display = 'block';
+                    burgerMenu.classList.remove('show');
+                }
+            });
+
+            if (window.innerWidth <= 768) {
+                bannerNav.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+#stream-grid {
+    margin-top: 20px;
+}
+
+#pro-players h2 {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.streams {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.stream {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stream:before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+}
+
+.stream iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.pro-streams {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.pro-stream {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 10px;
+}
+
+.pro-stream iframe {
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}

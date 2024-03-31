@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/base.css"> 
+    <link rel="stylesheet" href="/navigation.css"> 
+    <link rel="stylesheet" href="/profile.css"> 
+
+    <link rel="stylesheet" href="/styles_index.css">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <div class="logo">Fortnite Hub</div>
+        <nav id="banner-nav">
+            <ul>
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <button id="burger-menu-btn">&#9776;</button>
+        <nav id="burger-menu">
+            <ul>
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="profile">
+            <div class="friends-box item-box2">
+                <h2>Friends <button id="friendButton" class="add-friend-btn">+</button></h2>
+                <div class="item-details2 friend-list">
+                    <% if (friends && friends.length > 0) { %>
+                        <% friends.forEach(friend => { %>
+                            <div class="friend">
+                                <div class="friend-avatar"></div>
+                                <div class="friend-info">
+                                    <p><%= friend.friend_username %></p>
+                                    <button class="message-btn">Message</button>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No friends yet.</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="pending-friend-requests-box item-box2">
+                <h2>Pending Friend Requests</h2>
+                <div class="item-details2 friend-requests-list">
+                    <% if (pendingFriendRequests && pendingFriendRequests.length > 0) { %>
+                    <ul>
+                        <% pendingFriendRequests.forEach(request => { %>
+                            <li>User <%= request.sender_username %> has sent you a friend request</li>
+                            <div class="button-container">
+                                <form action="/accept-friend-request" method="post">
+                                    <input type="hidden" name="requestId" value="<%= request.id %>">
+                                    <button type="submit" name="action" value="accept">Accept</button>
+                                </form>
+                                <form action="/decline-friend-request" method="post">
+                                    <input type="hidden" name="requestId" value="<%= request.id %>">
+                                    <button type="submit">Decline</button>
+                                </form>
+                            </div>
+                        <% }); %>
+                    </ul>
+                    <% } else { %>
+                    <p>No pending friend requests.</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="posts-box item-box2">
+                <h2>Previous Posts</h2>
+                <div class="item-details2 post-list">
+                    <% if (posts && posts.length > 0) { %>
+                    <% posts.forEach(post => { %>
+                    <p><%= post.content %></p>
+                    <% }); %>
+                    <% } else { %>
+                    <p>No posts yet.</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="add-friend-popup" id="friendPopup">
+                <button class="close-btn" onclick="closePopup()">X</button>
+                <h2>Add Friend</h2>
+                <div id="errorMessage" style="color: red;"></div>
+                <form action="/add-friend" method="post" onsubmit="return handleAddFriend()">
+                    <label for="friendUsername">Enter friend's username:</label>
+                    <input type="text" id="friendUsername" name="friendUsername" placeholder="Enter friend's username">
+                    <button type="submit">Add Friend</button>
+                </form>
+            </div>
+            
+        <script>
+            function handleAddFriend() {
+                const friendUsername = document.getElementById('friendUsername').value;
+                const loggedInUsername = '<%= username %>';
+
+                if (!friendUsername) {
+                    document.getElementById('errorMessage').innerText = 'Please enter a username';
+                    return false;
+                } else if (friendUsername === loggedInUsername) {
+                    document.getElementById('errorMessage').innerText = 'You cannot add yourself as a friend';
+                    return false;
+                }
+
+                fetch('/add-friend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ friendUsername }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Friend request sent successfully') {
+                        showAlert(data.message);
+                        document.getElementById('errorMessage').innerText = '';
+                    } else {
+                        document.getElementById('errorMessage').innerText = data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('errorMessage').innerText = 'An error occurred. Please try again later.';
+                });
+
+                return false;
+            }
+        </script>
+
+
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const burgerButton = document.getElementById('burger-menu-btn');
+            const bannerNav = document.getElementById('banner-nav');
+
+            burgerButton.addEventListener('click', function() {
+                burgerMenu.classList.toggle('show');
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768) {
+                    bannerNav.style.display = 'none';
+                    burgerMenu.classList.add('show');
+                } else {
+                    bannerNav.style.display = 'block';
+                    burgerMenu.classList.remove('show');
+                }
+            });
+
+            if (window.innerWidth <= 768) {
+                bannerNav.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        const friendButton = document.getElementById('friendButton');
+        const friendPopup = document.getElementById('friendPopup');
+
+        friendButton.addEventListener('click', function() {
+            if (friendPopup.style.display === 'none') {
+                friendPopup.style.display = 'block';
+            } else {
+                friendPopup.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        function closePopup() {
+            document.getElementById('friendPopup').style.display = 'none';
+        }
+    </script>
+    
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+    </script>
+
+</body>
+
+</html>

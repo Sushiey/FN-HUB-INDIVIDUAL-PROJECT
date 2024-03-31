@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - FN Hub</title>
+    <link rel="stylesheet" href="/base.css"> 
+    <link rel="stylesheet" href="/navigation.css"> 
+    <link rel="stylesheet" href="/settings.css"> 
+
+    
+    <link rel="stylesheet" href="/styles_index.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/settings.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Fortnite Hub</div>
+        <nav id="banner-nav">
+            <ul>
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <button id="burger-menu-btn">&#9776;</button>
+        <nav id="burger-menu">
+            <ul>
+                <li><a href="/" id="statsLink">Home</a></li>
+                <li><a href="/stats" id="statsLink">Stats</a></li>
+                <li><a href="/shop" id="shopLink">Item Shop</a></li>
+                <% if (loggedIn) { %>
+                    <li><a href="/message" id="messageLink">Message</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="settings" class="settings-box">
+            <h1>User Settings</h1>
+            <div class="user-info">
+                <p>Username: <%= username %></p>
+                <p>Email: <%= email %></p>
+            </div>
+            <button type="button" onclick="showPasswordChange()" class="change-password-btn">Change Password</button>
+            <form id="passwordChangeForm" action="/settings" method="POST">
+                <div class="password-change-container" id="passwordChangeContainer">
+                    <h2>Change Password</h2>
+                    <label for="currentPassword">Current Password:</label>
+                    <input type="password" id="currentPassword" name="currentPassword">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword">
+                    <input type="hidden" id="email" name="email" value="<%= email %>">
+                    <button type="submit" class="save-changes-btn">Save Changes</button>
+                    <button type="button" onclick="hidePasswordChange()" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const burgerButton = document.getElementById('burger-menu-btn');
+            const bannerNav = document.getElementById('banner-nav');
+
+            burgerButton.addEventListener('click', function() {
+                burgerMenu.classList.toggle('show');
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768) {
+                    bannerNav.style.display = 'none';
+                    burgerMenu.classList.add('show');
+                } else {
+                    bannerNav.style.display = 'block';
+                    burgerMenu.classList.remove('show');
+                }
+            });
+
+            if (window.innerWidth <= 768) {
+                bannerNav.style.display = 'none';
+            }
+        });
+
+        function showPasswordChange() {
+            document.getElementById("passwordChangeContainer").style.display = "block";
+        }
+
+        function hidePasswordChange() {
+            document.getElementById("passwordChangeContainer").style.display = "none";
+        }
+
+        document.getElementById("passwordChangeForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            this.submit();
+            alert("Password change successful!");
+        });
+    </script>
+</body>
+
+</html>

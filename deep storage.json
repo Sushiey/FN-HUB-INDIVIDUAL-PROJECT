@@ -1,0 +1,524 @@
+[
+  {
+    "username": "Oatley",
+    "twitch_channel": "Oatley",
+    "region": "oceania",
+    "is_live": false
+  },
+  {
+    "username": "Peterbot",
+    "twitch_channel": "Peterbot",
+    "region": "nac",
+    "is_live": false
+  },
+  {
+    "username": "Merstach",
+    "twitch_channel": "Merstaach",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Malibuca",
+    "twitch_channel": "Malibuca",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Kiro",
+    "twitch_channel": "kiroszlol",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "kiduoo",
+    "twitch_channel": "kiduoo__",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "queasy",
+    "twitch_channel": "queasy",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Th0masHD",
+    "twitch_channel": "Th0masHD",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Pinq",
+    "twitch_channel": "pinqeu",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "S1neD",
+    "twitch_channel": "s1nedfn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "vanyak3kk",
+    "twitch_channel": "vanyak3kk",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Setty",
+    "twitch_channel": "Setty__",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Kami",
+    "twitch_channel": "KamiFN1",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "nebs",
+    "twitch_channel": "nebs",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "IDrop",
+    "twitch_channel": "IDrop",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Sangild",
+    "twitch_channel": "Sangildfn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "MariusCOW",
+    "twitch_channel": "MariusCOW1",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "JannisZ",
+    "twitch_channel": "JannisZ",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Flickzy",
+    "twitch_channel": "FlickzyV2",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "P1ngfnz",
+    "twitch_channel": "P1ngfnz",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Mikson",
+    "twitch_channel": "MiksonFN",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Vadeal",
+    "twitch_channel": "Vadeal",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "venofn",
+    "twitch_channel": "venofn",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "TaySon",
+    "twitch_channel": "TaySon",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Wheat",
+    "twitch_channel": "wheat28",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Shamokiy",
+    "twitch_channel": "Shamokiy",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "Hris",
+    "twitch_channel": "hrisfn4",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "PabloWingu",
+    "twitch_channel": "PabloWingufnn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "bevvys",
+    "twitch_channel": "bevvys",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Andilex",
+    "twitch_channel": "Andilextv",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Seyyto",
+    "twitch_channel": "SeyytoFN",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Volko",
+    "twitch_channel": "volkofn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "vortexers",
+    "twitch_channel": "vortexers",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Dyox",
+    "twitch_channel": "dyoxlol",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Kayd",
+    "twitch_channel": "kaydfn1",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Cringe",
+    "twitch_channel": "Cringefnbr_",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "Nomzz",
+    "twitch_channel": "nomzzfnr",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "G13ras",
+    "twitch_channel": "G13ras",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Vexxi",
+    "twitch_channel": "vexxxi_",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Artskill",
+    "twitch_channel": "artskillfn",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "Astralsq",
+    "twitch_channel": "Astralsq",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "Misha",
+    "twitch_channel": "Misha",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "t3eny",
+    "twitch_channel": "t3eny1x",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Fazer",
+    "twitch_channel": "faazer",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "K1nG",
+    "twitch_channel": "K1nG",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Robban",
+    "twitch_channel": "robbanfn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Axeforce",
+    "twitch_channel": "axeforce10",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "hen",
+    "twitch_channel": "hen75",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Vaske",
+    "twitch_channel": "vaske1x",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Belusi",
+    "twitch_channel": "BelusiFN",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Gabix",
+    "twitch_channel": "gabixfn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Darky",
+    "twitch_channel": "Darky",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "DarKiizZ",
+    "twitch_channel": "darkiioz",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "laizen",
+    "twitch_channel": "LaiizenFN",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "loxxxfn",
+    "twitch_channel": "loxxxfn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "snozQ",
+    "twitch_channel": "snozQ",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Prism",
+    "twitch_channel": "prism",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Casperinovic",
+    "twitch_channel": "casperinovic",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Deckzee",
+    "twitch_channel": "Deckzee",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Chap",
+    "twitch_channel": "Chap",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Kaanfnbr",
+    "twitch_channel": "KaanFnv2",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "LunexHD",
+    "twitch_channel": "LunexHD",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Рutrick",
+    "twitch_channel": "putrick_",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Noahreyli",
+    "twitch_channel": "Noahreyli",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "aqua",
+    "twitch_channel": "aquav2_",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Skydeun",
+    "twitch_channel": "Skydeun",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Shaykoz",
+    "twitch_channel": "Shaykoz",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Ricbor",
+    "twitch_channel": "ricborr",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Swizzy",
+    "twitch_channel": "SwizzY281_",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Dаndir",
+    "twitch_channel": "dandir_",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Hijoe",
+    "twitch_channel": "HijoeFN",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Scroll",
+    "twitch_channel": "ScrollSZN",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Voxe",
+    "twitch_channel": "voxeftn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "DKS",
+    "twitch_channel": "dks_fn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Moneymaker",
+    "twitch_channel": "fnmoneymaker",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "fnajen",
+    "twitch_channel": "fnajen",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "predage",
+    "twitch_channel": "predagefn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "AyarBaffo",
+    "twitch_channel": "AyarBaffo",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Mongraal",
+    "twitch_channel": "Mongraal",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "MrSavage",
+    "twitch_channel": "MrSavage",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "pixie",
+    "twitch_channel": "pixiefnbr1",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Layn",
+    "twitch_channel": "ohlaynnn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Fastroki",
+    "twitch_channel": "Fastroki",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "medax",
+    "twitch_channel": "medaxfn",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Robinswl",
+    "twitch_channel": "robinsongz",
+    "region": "eu",
+    "is_live": true
+  },
+  {
+    "username": "Chapix",
+    "twitch_channel": "Chapix",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "Saphir",
+    "twitch_channel": "saphirftn",
+    "region": "eu",
+    "is_live": false
+  }
+]

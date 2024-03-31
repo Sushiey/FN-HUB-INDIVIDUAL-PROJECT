@@ -1,0 +1,50 @@
+[
+  {
+    "username": "mrsavage",
+    "twitch_channel": "mrsavage",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "raskology",
+    "twitch_channel": "raskology",
+    "region": "nae",
+    "is_live": false
+  },
+  {
+    "username": "vadeal",
+    "twitch_channel": "vadeal",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "katoo",
+    "twitch_channel": "katoo",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "cringefnbr_",
+    "twitch_channel": "cringefnbr_",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "cringefnbr_",
+    "twitch_channel": "cringefnbr_",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "raskology",
+    "twitch_channel": "raskology",
+    "region": "eu",
+    "is_live": false
+  },
+  {
+    "username": "cringefnbr_",
+    "twitch_channel": "cringefnbr_",
+    "region": "eu",
+    "is_live": false
+  }
+]
