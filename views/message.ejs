@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FN Hub - Message</title>
+    <link rel="stylesheet" href="/base.css"> 
+    <link rel="stylesheet" href="/navigation.css"> 
+    <link rel="stylesheet" href="/message.css"> <!-- Assuming you have a message.css file for styling message page -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Fortnite Hub</div>
+        <nav id="main-nav">
+            <ul class="main-links">
+                <li><a href="/" id="mainStatsLink">Home</a></li>
+                <li><a href="/stats" id="mainStatsLink">Stats</a></li>
+                <li><a href="/shop" id="mainShopLink">Item Shop</a></li>
+                <li><a href="/message" id="messageLink">Message</a></li> <!-- Highlighting the current page -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <button id="burger-menu-btn">&#9776;</button>
+        <nav id="burger-menu">
+            <ul>
+                <li><a href="/" id="burgerStatsLink">Home</a></li>
+                <li><a href="/stats" id="burgerStatsLink">Stats</a></li>
+                <li><a href="/shop" id="burgerShopLink">Item Shop</a></li>
+                <li><a href="/message" id="messageLink">Message</a></li> <!-- Highlighting the current page -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                    <div class="dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>      
+        <section id="message-section">
+            <div class="friends-container">
+                <div class="friends-box item-box2">
+                    <h2>Friends List</h2>
+                    <div class="friend-container">
+                        <div class="friend-list">
+                            <% if (friends && friends.length > 0) { %>
+                                <% friends.forEach(friend => { %>
+                                    <div class="friend">
+                                        <div class="friend-avatar"></div>
+                                        <div class="friend-info">
+                                            <p><%= friend.friend_username %></p>
+                                            <button class="message-btn" onclick="openMessageDialog('<%= friend.friend_username %>')">Message</button>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            <% } else { %>
+                                <p>No friends yet.</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+ 
+        <div id="message-dialog" class="message-dialog">
+            <div class="message-dialog-content">
+                <span class="close" onclick="closeMessageDialog()">&times;</span>
+                <div class="message-header">
+                    <div class="sender-avatar"></div>
+                    <h2 id="message-recipient">Recipient Name</h2>
+                </div>
+                <div class="message-body" id="message-body">
+                    <!-- Messages will be dynamically added here -->
+                </div>
+                <div class="message-input">
+                    <form id="message-form">
+                        <input type="text" id="message-text" placeholder="Type your message here...">
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+    
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const burgerMenu = document.getElementById('burger-menu');
+            const burgerButton = document.getElementById('burger-menu-btn');
+        
+            burgerButton.addEventListener('click', function() {
+                burgerMenu.classList.toggle('show');
+            });
+        
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    burgerMenu.classList.remove('show');
+                }
+            });
+        });
+    </script>
+
+<script>
+    function openMessageDialog(username) {
+        document.getElementById('message-dialog').style.display = 'block';
+        document.getElementById('message-recipient').innerText = username;
+    }
+
+    function closeMessageDialog() {
+        document.getElementById('message-dialog').style.display = 'none';
+    }
+
+    document.getElementById('message-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    const messageText = document.getElementById('message-text').value;
+    const recipient = document.getElementById('message-recipient').innerText;
+    // Here you can send the message using AJAX or any other method
+    // Example AJAX request:
+    // fetch('/send-message', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({ recipient: recipient, message: messageText })
+    // })
+    // .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error('Failed to send message');
+    //     }
+    //     // Handle success
+    //     console.log('Message sent successfully');
+    // })
+    // .catch(error => {
+    //     console.error('Error sending message:', error);
+    //     // Handle error
+    // });
+    // For demonstration purposes, let's just log the message to the console
+    console.log('Message:', messageText);
+});
+
+</script>
+
+    <!-- Include any additional scripts if needed -->
+
+</body>
+</html>

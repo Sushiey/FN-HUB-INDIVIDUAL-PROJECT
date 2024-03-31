@@ -93,7 +93,25 @@ function createTables() {
         FOREIGN KEY(sender_id) REFERENCES users(id),
         FOREIGN KEY(receiver_id) REFERENCES users(id)
     )`);
+
+    // Create messages table if not exists
+    db.run(`CREATE TABLE IF NOT EXISTS messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sender_id INTEGER,
+        receiver_id INTEGER,
+        content TEXT,
+        sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(sender_id) REFERENCES users(id),
+        FOREIGN KEY(receiver_id) REFERENCES users(id)
+    )`, (err) => {
+        if (err) {
+            console.error('Error creating messages table:', err);
+        } else {
+            console.log('Messages table created successfully');
+        }
+    });
 }
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -129,6 +147,26 @@ passport.use(new LocalStrategy(
         });
     }
 ));
+
+app.get('/message', (req, res) => {
+    // Check if user is authenticated
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login'); // Redirect to login page if not authenticated
+    }
+
+    // Fetch the list of friends for the logged-in user
+    db.all('SELECT * FROM friends WHERE user_id = ?', [req.user.id], (err, friends) => {
+        if (err) {
+            console.error('Error fetching friends:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        // Render the message page with user information and list of friends
+        res.render('message', { loggedIn: true, username: req.user.username, friends: friends });
+    });
+});
+
+
 
 app.get('/login', (req, res) => {
     res.render('login');

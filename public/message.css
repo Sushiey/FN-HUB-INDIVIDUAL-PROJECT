@@ -1,0 +1,148 @@
+.message-dialog {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #0e1220; /* Dark blue background */
+    border: 1px solid #1a1f2b; /* Adjusted border color */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    height: 80vh;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.message-dialog-content {
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #ffffff;
+    z-index: 1001;
+}
+
+.close:hover {
+    color: #007bff;
+}
+
+.message-header {
+    display: flex;
+    align-items: center;
+}
+
+.sender-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.message-body {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.message-input {
+    margin-top: 10px;
+}
+
+.message-input form {
+    display: flex;
+    align-items: center;
+}
+
+.message-input input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px; /* Added margin-right to create space */
+}
+
+.message-input button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Styling for friends list */
+.friends-container {
+    display: flex;
+    justify-content: center;
+}
+
+.friends-box {
+    background-color: #1a1f2b; /* Dark blue background */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 900px;
+    width: 100%;
+    margin-top: 100px; /* Increased margin-top to create space between header and box */
+}
+
+.friend-container {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.friend-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.friend {
+    display: flex;
+    align-items: center;
+    border: 1px solid #1a1f2b; /* Adjusted border color */
+    border-radius: 8px;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.friend:hover {
+    transform: translateY(-5px);
+}
+
+.friend-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #2a2f3b; /* Darker blue background for avatar */
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.friend-info {
+    flex: 1;
+}
+
+.message-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.message-btn:hover {
+    background-color: #0056b3;
+}
