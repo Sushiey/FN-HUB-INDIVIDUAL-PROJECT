@@ -94,7 +94,6 @@ function createTables() {
         FOREIGN KEY(receiver_id) REFERENCES users(id)
     )`);
 
-    // Create messages table if not exists
     db.run(`CREATE TABLE IF NOT EXISTS messages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sender_id INTEGER,
@@ -111,7 +110,6 @@ function createTables() {
         }
     });
 }
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -149,21 +147,18 @@ passport.use(new LocalStrategy(
 ));
 
 app.get('/message', (req, res) => {
-    // Check if user is authenticated
     if (!req.isAuthenticated()) {
-        return res.redirect('/login'); // Redirect to login page if not authenticated
+        return res.redirect('/login');
     }
 
-    const loggedInUserId = req.user.id; // Get the logged-in user's ID
+    const loggedInUserId = req.user.id;
 
-    // Fetch the list of friends for the logged-in user
     db.all('SELECT * FROM friends WHERE user_id = ?', [loggedInUserId], (err, friends) => {
         if (err) {
             console.error('Error fetching friends:', err);
             return res.status(500).send('Internal Server Error');
         }
 
-        // Fetch messages for each friend separately
         const friendMessagesPromises = friends.map(friend => {
             return new Promise((resolve, reject) => {
                 const friendId = friend.friend_id;
@@ -174,7 +169,6 @@ app.get('/message', (req, res) => {
                             console.error(`Error fetching messages for friend ${friendId}:`, err);
                             resolve([]);
                         } else {
-                            // Update each message to include a flag indicating whether it was sent by the logged-in user
                             messages.forEach(message => {
                                 message.sentByLoggedInUser = message.sender_id === loggedInUserId;
                             });
@@ -184,7 +178,6 @@ app.get('/message', (req, res) => {
             });
         });
 
-        // Resolve all promises and render the message page with user information, list of friends, and messages
         Promise.all(friendMessagesPromises).then(messagesByFriend => {
             res.render('message', { 
                 loggedIn: true, 
@@ -203,15 +196,13 @@ app.get('/message', (req, res) => {
 
 
 app.get('/get-messages', (req, res) => {
-    // Check if user is authenticated
     if (!req.isAuthenticated()) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const loggedInUserId = req.user.id; // Get the logged-in user's ID
-    const recipient = req.query.recipient; // Get the recipient's username from the query parameter
+    const loggedInUserId = req.user.id;
+    const recipient = req.query.recipient;
 
-    // Fetch messages between the logged-in user and the specified recipient
     db.all('SELECT id, sender_id, content FROM messages WHERE (sender_id = ? AND receiver_id = (SELECT id FROM users WHERE username = ?)) OR (receiver_id = ? AND sender_id = (SELECT id FROM users WHERE username = ?)) ORDER BY sent_at',
         [loggedInUserId, recipient, loggedInUserId, recipient], (err, messages) => {
             if (err) {
@@ -219,17 +210,13 @@ app.get('/get-messages', (req, res) => {
                 return res.status(500).json({ message: 'Internal Server Error' });
             }
 
-            // Add a property to each message indicating whether it was sent by the logged-in user
             messages.forEach(message => {
                 message.sentByLoggedInUser = (message.sender_id === loggedInUserId);
             });
 
-            // Send the fetched messages as a JSON response
             res.json({ messages: messages, loggedInUserId: loggedInUserId });
         });
 });
-
-
 
 app.post('/send-message', (req, res) => {
     if (!req.isAuthenticated()) {
@@ -239,19 +226,15 @@ app.post('/send-message', (req, res) => {
     const { recipient, message } = req.body;
     const senderId = req.user.id;
 
-    // Save the message in the messages table
     db.run('INSERT INTO messages (sender_id, receiver_id, content) VALUES (?, (SELECT id FROM users WHERE username = ?), ?)', [senderId, recipient, message], (err) => {
         if (err) {
             console.error('Error sending message:', err);
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     
-        // Message sent successfully
         res.status(200).json({ message: 'Message sent successfully' });
     });
 });
-
-
 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -276,7 +259,6 @@ app.post('/login', (req, res, next) => {
         });
     })(req, res, next);
 });
-
 
 app.get('/create-account', (req, res) => {
     res.render('create_account');
