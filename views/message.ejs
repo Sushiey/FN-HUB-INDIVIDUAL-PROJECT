@@ -78,13 +78,29 @@
  
         <div id="message-dialog" class="message-dialog">
             <div class="message-dialog-content">
-                <span class="close" onclick="closeMessageDialog()">&times;</span>
                 <div class="message-header">
+                    <span class="close" onclick="closeMessageDialog()">&times;</span> <!-- Move close button here -->
                     <div class="sender-avatar"></div>
                     <h2 id="message-recipient">Recipient Name</h2>
                 </div>
                 <div class="message-body" id="message-body">
-                    <!-- Messages will be dynamically added here -->
+                    <% if (messages && messages.length > 0) { %>
+                        <% messages.forEach(message => { %>
+                            <div class="message">
+                                <% if (message.sender_id === req.user.id) { %>
+                                    <div class="sent-message">
+                                        <%= message.content %>
+                                    </div>
+                                <% } else { %>
+                                    <div class="received-message">
+                                        <%= message.content %>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No messages yet.</p>
+                    <% } %>
                 </div>
                 <div class="message-input">
                     <form id="message-form">
@@ -94,9 +110,7 @@
                 </div>
             </div>
         </div>
-        
-        
-    
+    </main>
 
     <footer class="footer">
         <div class="container">
@@ -108,74 +122,99 @@
         document.addEventListener('DOMContentLoaded', function() {
             const burgerMenu = document.getElementById('burger-menu');
             const burgerButton = document.getElementById('burger-menu-btn');
-        
+    
             burgerButton.addEventListener('click', function() {
                 burgerMenu.classList.toggle('show');
             });
-        
+    
             window.addEventListener('resize', function() {
                 if (window.innerWidth > 768) {
                     burgerMenu.classList.remove('show');
                 }
             });
         });
-    </script>
-
-    <script>
+    
         function openMessageDialog(username) {
             document.getElementById('message-dialog').style.display = 'block';
             document.getElementById('message-recipient').innerText = username;
+            fetch('/get-messages?recipient=' + encodeURIComponent(username))
+                .then(response => response.json())
+                .then(data => {
+                    const messageBody = document.getElementById('message-body');
+                    messageBody.innerHTML = ''; // Clear existing messages
+                    data.messages.forEach(message => {
+                        messageBody.innerHTML += `
+                            <div class="message">
+                                ${message.sender_id === data.loggedInUserId ? '<div class="sent-message">' : '<div class="received-message">'}
+                                    ${message.content}
+                                </div>
+                            </div>`;
+                    });
+                    scrollToBottom(); // Scroll to bottom when loading messages
+                })
+                .catch(error => {
+                    console.error('Error retrieving messages:', error);
+                });
         }
-
+    
         function closeMessageDialog() {
             document.getElementById('message-dialog').style.display = 'none';
         }
-
+    
         document.getElementById('message-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission behavior
-        const messageText = document.getElementById('message-text').value;
-        const recipient = document.getElementById('message-recipient').innerText;
-        // Here you can send the message using AJAX or any other method
-        // Example AJAX request:
-        // fetch('/send-message', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ recipient: recipient, message: messageText })
-        // })
-        // .then(response => {
-        //     if (!response.ok) {
-        //         throw new Error('Failed to send message');
-        //     }
-        //     // Handle success
-        //     console.log('Message sent successfully');
-        // })
-        // .catch(error => {
-        //     console.error('Error sending message:', error);
-        //     // Handle error
-        // });
-        // For demonstration purposes, let's just log the message to the console
-        console.log('Message:', messageText);
-    });
+            event.preventDefault(); // Prevent the default form submission behavior
+    
+            const messageText = document.getElementById('message-text').value;
+            const recipient = document.getElementById('message-recipient').innerText;
+    
+            fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ recipient: recipient, message: messageText })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send message');
+                }
+                // Clear the message input field after successful sending
+                document.getElementById('message-text').value = '';
+                // Append the sent message to the message-body div
+                const messageBody = document.getElementById('message-body');
+                messageBody.innerHTML += `
+                    <div class="message">
+                        <div class="sent-message">${messageText}</div>
+                    </div>`;
+                scrollToBottom(); // Scroll to bottom when sending a message
+                // Handle success
+                console.log('Message sent successfully');
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                // Handle error
+                document.getElementById('message-status').innerText = 'Error sending message: ' + error.message;
+            });
+        });
 
-    </script>
+        // Function to scroll to the bottom of the message body
+        function scrollToBottom() {
+            const messageBody = document.getElementById('message-body');
+            messageBody.scrollTop = messageBody.scrollHeight;
+        }
 
+        // JavaScript code to scroll to the bottom of the message body when the dialog becomes active
+        const messageDialog = document.querySelector('.message-dialog');
+        const messageBody = document.querySelector('.message-body');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if the username query parameter is present in the URL
-            const params = new URLSearchParams(window.location.search);
-            const username = params.get('username');
-            
-            // If the username is present, open the message pop-out for that user
-            if (username) {
-                openMessageDialog(username);
+        // Event listener to trigger scrolling when the dialog becomes active
+        messageDialog.addEventListener('transitionend', function(event) {
+            if (event.propertyName === 'display' && messageDialog.classList.contains('active')) {
+                scrollToBottom();
             }
         });
-    </script>
 
-    <!-- Include any additional scripts if needed -->
+    </script>
 
 </body>
 </html>

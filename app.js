@@ -161,11 +161,39 @@ app.get('/message', (req, res) => {
             return res.status(500).send('Internal Server Error');
         }
 
-        // Render the message page with user information and list of friends
-        res.render('message', { loggedIn: true, username: req.user.username, friends: friends });
+        // Fetch messages for the user
+        db.all('SELECT * FROM messages WHERE receiver_id = ? OR sender_id = ?', [req.user.id, req.user.id], (err, messages) => {
+            if (err) {
+                console.error('Error fetching messages:', err);
+                return res.status(500).send('Internal Server Error');
+            }
+
+            // Render the message page with user information, list of friends, and messages
+            res.render('message', { loggedIn: true, username: req.user.username, friends: friends, messages: messages, req: req });
+        });
     });
 });
 
+
+app.post('/send-message', (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const { recipient, message } = req.body;
+    const senderId = req.user.id;
+
+    // Insert the message into the messages table
+    db.run('INSERT INTO messages (sender_id, receiver_id, content) VALUES (?, (SELECT id FROM users WHERE username = ?), ?)', [senderId, recipient, message], (err) => {
+        if (err) {
+            console.error('Error sending message:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+
+        // Message sent successfully
+        res.status(200).json({ message: 'Message sent successfully' });
+    });
+});
 
 
 app.get('/login', (req, res) => {
