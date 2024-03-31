@@ -84,24 +84,31 @@
                     <h2 id="message-recipient">Recipient Name</h2>
                 </div>
                 <div class="message-body" id="message-body">
-                    <% if (messages && messages.length > 0) { %>
-                        <% messages.forEach(message => { %>
-                            <div class="message">
-                                <% if (message.sender_id === req.user.id) { %>
-                                    <div class="sent-message">
-                                        <%= message.content %>
-                                    </div>
-                                <% } else { %>
-                                    <div class="received-message">
-                                        <%= message.content %>
-                                    </div>
-                                <% } %>
-                            </div>
-                        <% }); %>
+                    <% if (messagesByFriend && messagesByFriend.length > 0) { %>
+                        <% messagesByFriend.forEach(messages => { %>
+                            <% messages.forEach(message => { %>
+                                <div class="message">
+                                    <% if (message.sentByLoggedInUser) { %>
+                                        <div class="sent-message">
+                                            <%= message.content %>
+                                        </div>
+                                    <% } else { %>
+                                        <div class="received-message">
+                                            <%= message.content %>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            <% }) %>
+                        <% }) %>
                     <% } else { %>
-                        <p>No messages yet.</p>
+                        <p>No messages</p>
                     <% } %>
                 </div>
+                
+                
+                
+                
+
                 <div class="message-input">
                     <form id="message-form">
                         <input type="text" id="message-text" placeholder="Type your message here...">
@@ -142,7 +149,7 @@
                 .then(data => {
                     const messageBody = document.getElementById('message-body');
                     messageBody.innerHTML = ''; // Clear existing messages
-                    data.messages.forEach(message => {
+                    data.messages.forEach(message => {  // <-- Error likely occurs here
                         messageBody.innerHTML += `
                             <div class="message">
                                 ${message.sender_id === data.loggedInUserId ? '<div class="sent-message">' : '<div class="received-message">'}
@@ -154,8 +161,9 @@
                 })
                 .catch(error => {
                     console.error('Error retrieving messages:', error);
-                });
-        }
+        });
+}
+
     
         function closeMessageDialog() {
             document.getElementById('message-dialog').style.display = 'none';
@@ -215,6 +223,9 @@
         });
 
     </script>
+
+        
+
 
 </body>
 </html>
