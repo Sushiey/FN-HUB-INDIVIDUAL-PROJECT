@@ -86,25 +86,27 @@
                 <div class="message-body" id="message-body">
                     <% if (messagesByFriend && messagesByFriend.length > 0) { %>
                         <% messagesByFriend.forEach(messages => { %>
-                            <% messages.forEach(message => { %>
-                                <div class="message">
-                                    <% if (message.sentByLoggedInUser) { %>
-                                        <div class="sent-message">
-                                            <%= message.content %>
-                                        </div>
-                                    <% } else { %>
-                                        <div class="received-message">
-                                            <%= message.content %>
-                                        </div>
-                                    <% } %>
-                                </div>
+                            <% messages.reverse().forEach(message => { %>
+                                <% if (message.sentByLoggedInUser) { %>
+                                    <div class="sent-message">
+                                        <%= message.content %>
+                                    </div>
+                                <% } else { %>
+                                    <div class="received-message">
+                                        <%= message.content %>
+                                    </div>
+                                <% } %>
                             <% }) %>
                         <% }) %>
                     <% } else { %>
                         <p>No messages</p>
                     <% } %>
                 </div>
-                
+                <div id="older-messages" style="display: none;">
+                    <h3>Older Messages</h3>
+                    <div id="older-message-list"></div>
+                </div>
+
                 <div class="message-input">
                     <form id="message-form">
                         <input type="text" id="message-text" placeholder="Type your message here...">
@@ -113,6 +115,8 @@
                 </div>
             </div>
         </div>
+        
+        <button id="unlock-button" onclick="toggleOldMessages()" style="display: none;">Unlock Older Messages</button>
     </main>
 
     <footer class="footer">
@@ -146,30 +150,30 @@
                     const messageBody = document.getElementById('message-body');
                     messageBody.innerHTML = '';
                     data.messages.forEach(message => {
-                        messageBody.innerHTML += `
+                        messageBody.innerHTML = `
                             <div class="message">
                                 ${message.sender_id === data.loggedInUserId ? '<div class="sent-message">' : '<div class="received-message">'}
                                     ${message.content}
                                 </div>
-                            </div>`;
+                            </div>` + messageBody.innerHTML;
                     });
-                    scrollToBottom();
+                    scrollToTop();
                 })
                 .catch(error => {
                     console.error('Error retrieving messages:', error);
-        });
-}
-
+                });
+        }
+    
         function closeMessageDialog() {
             document.getElementById('message-dialog').style.display = 'none';
         }
     
         document.getElementById('message-form').addEventListener('submit', function(event) {
             event.preventDefault();
-    
+
             const messageText = document.getElementById('message-text').value;
             const recipient = document.getElementById('message-recipient').innerText;
-    
+
             fetch('/send-message', {
                 method: 'POST',
                 headers: {
@@ -183,11 +187,11 @@
                 }
                 document.getElementById('message-text').value = '';
                 const messageBody = document.getElementById('message-body');
-                messageBody.innerHTML += `
+                messageBody.innerHTML = `
                     <div class="message">
                         <div class="sent-message">${messageText}</div>
-                    </div>`;
-                scrollToBottom();
+                    </div>` + messageBody.innerHTML;
+                scrollToTop(); // Scroll to top when a new message is sent
                 console.log('Message sent successfully');
             })
             .catch(error => {
@@ -195,28 +199,56 @@
                 document.getElementById('message-status').innerText = 'Error sending message: ' + error.message;
             });
         });
-
-        function scrollToBottom() {
+    
+        function scrollToTop() {
             const messageBody = document.getElementById('message-body');
-            messageBody.scrollTop = messageBody.scrollHeight;
+            messageBody.scrollTop = 0;
         }
-
+    
+        let olderMessagesVisible = false;
+    
+        function toggleOldMessages() {
+            olderMessagesVisible = !olderMessagesVisible;
+            const olderMessagesSection = document.getElementById('older-messages');
+            const unlockButton = document.getElementById('unlock-button');
+    
+            if (olderMessagesVisible) {
+                unlockButton.style.display = 'block';
+                olderMessagesSection.style.display = 'block';
+                fetch('/get-older-messages')
+                    .then(response => response.json())
+                    .then(data => {
+                        const olderMessagesList = document.getElementById('older-message-list');
+                        olderMessagesList.innerHTML = '';
+                        data.messages.forEach(message => {
+                            olderMessagesList.innerHTML += `
+                                <div class="older-message">
+                                    ${message.content}
+                                </div>`;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error retrieving older messages:', error);
+                    });
+            } else {
+                unlockButton.style.display = 'none';
+                olderMessagesSection.style.display = 'none';
+            }
+        }
+    
         const messageDialog = document.querySelector('.message-dialog');
         const messageBody = document.querySelector('.message-body');
-
+    
         messageDialog.addEventListener('transitionend', function(event) {
             if (event.propertyName === 'display' && messageDialog.classList.contains('active')) {
-                scrollToBottom();
+                scrollToTop();
             }
         });
-
-    </script>
-
-    <script>
+    
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const username = urlParams.get('username');
-            
+    
             if (username) {
                 setTimeout(() => {
                     openMessageDialog(username);
@@ -224,6 +256,5 @@
             }
         });
     </script>
-
 </body>
 </html>
