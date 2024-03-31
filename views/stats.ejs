@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter Player Stats</title>
+    <title>Player Stats</title>
     <link rel="stylesheet" href="/base.css">
-
-
-
-    <link rel="stylesheet" href="/styles_index.css">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/navigation.css">
+    <link rel="stylesheet" href="/stats_display.css">
 </head>
 <body>
     <header>
@@ -57,20 +54,42 @@
         </nav>
     </header>
     <main>
-        <form action="/stats" method="POST" id="stats-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br><br>
-            <label for="platform">Platform:</label>
-            <select id="platform" name="platform" required>
-                <option value="epic">Epic</option>
-                <option value="psn">PlayStation</option>
-                <option value="xbl">Xbox</option>
-            </select><br><br>
-            <button type="submit">Get Stats</button>
-        </form>
+        <% if (playerStats) { %>
+            <!-- Display player stats here -->
+            <div class="player-stats-container">
+                <h2>Player Stats</h2>
+                <p><strong>Player Name:</strong> <%= playerStats.account.name %></p>
+                <p><strong>Account ID:</strong> <%= playerStats.account.id %></p>
+                <p><strong>Battle Pass Level:</strong> <%= playerStats.battlePass.level %></p>
+                <p><strong>Battle Pass Progress:</strong> <%= playerStats.battlePass.progress %>%</p>
+                <h3 class="lifetime-stats-header">Lifetime Stats:</h3> <!-- Lifetime Stats header -->
+                <div class="inner-box"> <!-- Inner box for Lifetime Stats -->
+                    <ul>
+                        <li><strong>Overall Wins:</strong> <%= playerStats.stats.all.overall.wins %></li>
+                        <li><strong>Overall Kills:</strong> <%= playerStats.stats.all.overall.kills %></li>
+                        <li><strong>Overall KD Ratio:</strong> <%= playerStats.stats.all.overall.kd.toFixed(2) %></li>
+                        <li><strong>Matches Played:</strong> <%= playerStats.stats.all.overall.matches %></li>
+                        <li><strong>Deaths:</strong> <%= playerStats.stats.all.overall.deaths %></li>
+                        <li><strong>Win Rate:</strong> <%= playerStats.stats.all.overall.winRate.toFixed(2) %>%</li>
+                        <li><strong>Minutes Played:</strong> <%= playerStats.stats.all.overall.minutesPlayed %></li>
+                        <li><strong>Players Outlived:</strong><%= playerStats.stats.all.overall.playersOutlived %></span></li>
+                    </ul>
+                </div>
+            </div>
+        <% } else { %>
+            <p class="no-stats">No player stats available.</p>
+        <% } %>
+
+        <div class="back-button">
+            <a href="/stats">Back</a>
+        </div>
+        
     </main>
-    <footer>
-        <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fortnite Hub. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
@@ -98,5 +117,48 @@
             }
         });
     </script>
+    
+
+    <script>
+        async function fetchProPlayerStreams() {
+            try {
+                const response = await fetch('/pro-player-streams');
+                const proPlayerStreams = await response.json();
+                return proPlayerStreams;
+            } catch (error) {
+                console.error('Error fetching pro player streams:', error);
+                return [];
+            }
+        }
+
+        async function displayProPlayerStreams() {
+            try {
+                const streamers = await fetchProPlayerStreams();
+                const streamContainer = document.getElementById('stream-container');
+                streamContainer.innerHTML = ''; 
+                for (const streamer of streamers) {
+                    if (streamer.is_live) {
+                        const streamDiv = document.createElement('div');
+                        streamDiv.classList.add('stream');
+                        const iframe = document.createElement('iframe');
+                        iframe.src = `https://player.twitch.tv/?channel=${streamer.username}&parent=localhost`;
+                        iframe.frameBorder = '0';
+                        iframe.allowFullscreen = 'true';
+                        iframe.scrolling = 'no';
+                        streamDiv.appendChild(iframe);
+                        streamContainer.appendChild(streamDiv);
+                    }
+                }
+            } catch (error) {
+                console.error('Error displaying pro player streams:', error);
+            }
+        }
+
+        window.onload = () => {
+            displayProPlayerStreams();
+        };
+    </script>
+
+    <script src="../app.js"></script>
 </body>
-</html>
+</html

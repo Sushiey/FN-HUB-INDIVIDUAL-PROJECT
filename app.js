@@ -12,6 +12,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -110,6 +112,65 @@ function createTables() {
         }
     });
 }
+
+
+
+
+// Set up multer storage
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/profile_pics'); // Save profile pics in 'uploads/profile_pics' directory
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Rename the file
+    }
+});
+
+// Initiate multer upload
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 1000000 }, // Limit file size to 1MB
+    fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+    }
+}).single('profilePic');
+
+// Check file type
+function checkFileType(file, cb) {
+    // Allowed extensions
+    const filetypes = /jpeg|jpg|png/;
+    // Check extension
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime type
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+        return cb(null, true);
+    } else {
+        cb('Error: Images only!');
+    }
+}
+
+// Handle POST request for profile picture upload
+app.post('/upload-profile-pic', (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            if (req.file == undefined) {
+                res.status(400).send('Error: No file selected!');
+            } else {
+                // Here, you can save the file path in the database or perform any other necessary actions
+                res.status(200).send('File uploaded successfully!');
+            }
+        }
+    });
+});
+
+
+
+
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -447,9 +508,17 @@ app.get('/pro-player-streams', (req, res) => {
     });
 });
 
+// Route handler for displaying the input form
 app.get('/stats', (req, res) => {
-    res.render('stats_input', { loggedIn: req.isAuthenticated(), username: req.user ? req.user.username : null });
+    // Determine if the user is logged in
+    const loggedIn = req.isAuthenticated();
+
+    // Pass loggedIn and username to the stats_input template
+    res.render('stats_input', { loggedIn, username: req.user ? req.user.username : null });
 });
+
+
+
 
 app.get('/profile', (req, res) => {
     if (!req.isAuthenticated()) {
@@ -719,16 +788,44 @@ function updateUserPassword(email, newPassword) {
     });
 }
 
+
+// Create Axios instance with necessary configuration
+const axiosInstance = axios.create({
+    baseURL: 'https://fortnite-api.com/v2',
+    headers: {
+      'Authorization': 'a3c4c741-e737-44bc-8225-2cf4e224fbb0', // Replace 'YOUR_API_KEY_HERE' with your actual API key from fortnite-api.com
+      'Content-Type': 'application/json'
+    }
+});
+  
 app.post('/stats', async (req, res) => {
     try {
         const { username, platform } = req.body;
-        const playerStats = await fetchPlayerStats(username, platform);
-        res.render('stats', { playerStats });
+
+        // Make a request to the Fortnite API using the axiosInstance
+        const response = await axiosInstance.get(`/stats/br/v2?name=${encodeURIComponent(username)}&accountType=${encodeURIComponent(platform)}&timeWindow=lifetime`);
+
+        // Log the response data to the console
+        console.log(response.data);
+
+        // Extract the player stats from the response
+        const playerStats = response.data.data;
+
+        // Determine if the user is logged in
+        const loggedIn = req.isAuthenticated();
+
+        // Pass loggedIn and username to the stats template
+        res.render('stats', { playerStats, loggedIn, username: req.user ? req.user.username : null });
     } catch (error) {
         console.error("Error fetching player stats:", error);
-        res.status(500).send("Error fetching player stats");
+        res.status(500).send("Error fetching player stats: " + error.message);
     }
 });
+
+
+
+
+
 
 app.get('/shop', async (req, res) => {
     try {

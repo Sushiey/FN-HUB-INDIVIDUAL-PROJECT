@@ -1,32 +1,29 @@
-
-
 body {
-    overflow-x: hidden; /* Hide horizontal overflow */
+    overflow-x: hidden;
 }
 
 html, body {
-    height: 100%; /* Ensure body takes full height of viewport */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    height: 100%; 
+    margin: 0;
+    padding: 0;
 }
 
-/* Adjust the positioning of the message dialog */
 .message-dialog {
     display: none;
     flex-direction: column;
     position: fixed;
-    z-index: 999; /* Ensure message dialog appears above header and footer */
-    top: calc(50px + 1em); /* Adjust based on header height and padding */
+    z-index: 999;
+    top: calc(50px + 1em);
     left: 50%;
     transform: translateX(-50%);
     background-color: #0e1220;
     border: 1px solid #1a1f2b;
     border-radius: 10px;
-    padding: 0; /* Adjust padding as needed */
+    padding: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 90%; /* Adjust width as needed */
-    max-width: 800px; /* Adjust max-width as needed */
-    max-height: calc(100vh - 100px - 3em); /* Adjust based on header, footer height, and margin */
+    width: 90%;
+    max-width: 800px;
+    max-height: calc(100vh - 100px - 3em);
     overflow-y: auto;
 }
 
@@ -44,7 +41,7 @@ html, body {
 .close {
     position: absolute;
     top: 10px;
-    right: 10px; /* Move close button to the top right corner */
+    right: 10px;
     cursor: pointer;
     font-size: 24px;
     color: #ffffff;
@@ -58,21 +55,21 @@ html, body {
 .message-header {
     display: flex;
     align-items: center;
-    margin-top: 0; /* Ensure no gap at the top */
-    margin-bottom: 0; /* Remove margin between header and body */
+    margin-top: 0;
+    margin-bottom: 0;
     position: sticky;
     top: 0;
-    background-color: #0e1220; /* Optional: To match the background color */
-    padding: 15px; /* Add padding */
-    z-index: 1001; /* Ensure header remains above content */
+    background-color: #0e1220;
+    padding: 15px;
+    z-index: 1001;
 }   
 
 .message-header h2 {
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 
 .sender-info {
-    margin-right: auto; /* Push the name to the right */
+    margin-right: auto;
 }
 
 .sender-avatar {
@@ -80,15 +77,15 @@ html, body {
     height: 40px;
     background-color: #ccc;
     border-radius: 50%;
-    margin-right: 10px; /* Put margin on the right side */
+    margin-right: 10px;
 }
 
 .message-body {
     flex: 1;
     overflow-y: auto;
-    margin-top: 0; /* Adjusted to remove any top margin */
-    padding-top: 10px; /* Adjusted to remove any top padding */
-    padding-bottom: 10px; /* Adjust bottom padding to avoid going behind footer */
+    margin-top: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 
@@ -96,9 +93,9 @@ html, body {
     position: sticky;
     bottom: 0;
     background-color: #0e1220;
-    padding: 10px; /* Add padding */
+    padding: 10px;
     z-index: 1002;
-    margin-top: auto; /* Cover the entire bottom area of the dialog */
+    margin-top: auto;
 }
 
 .message-input button {
@@ -208,8 +205,8 @@ html, body {
     padding: 10px;
     border-radius: 10px;
     max-width: 70%;
-    align-self: flex-end; /* Align sent messages to the right */
-    margin-bottom: 5px; /* Reduce bottom margin */
+    align-self: flex-end;
+    margin-bottom: 5px;
 }
 
 .received-message {
@@ -218,8 +215,8 @@ html, body {
     padding: 10px;
     border-radius: 10px;
     max-width: 70%;
-    align-self: flex-start; /* Align received messages to the left */
-    margin-bottom: 5px; /* Reduce bottom margin */
+    align-self: flex-start;
+    margin-bottom: 5px;
 }
 
 
@@ -247,6 +244,6 @@ html, body {
     }
 
     .message-dialog {
-        width: 95%; /* Adjust width for smaller screens */
+        width: 95%;
     }
 }
