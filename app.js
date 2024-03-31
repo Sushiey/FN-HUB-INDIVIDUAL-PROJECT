@@ -12,8 +12,6 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
-const multer = require('multer');
-
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -112,65 +110,6 @@ function createTables() {
         }
     });
 }
-
-
-
-
-// Set up multer storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/profile_pics'); // Save profile pics in 'uploads/profile_pics' directory
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Rename the file
-    }
-});
-
-// Initiate multer upload
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 1000000 }, // Limit file size to 1MB
-    fileFilter: function (req, file, cb) {
-        checkFileType(file, cb);
-    }
-}).single('profilePic');
-
-// Check file type
-function checkFileType(file, cb) {
-    // Allowed extensions
-    const filetypes = /jpeg|jpg|png/;
-    // Check extension
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    // Check mime type
-    const mimetype = filetypes.test(file.mimetype);
-
-    if (mimetype && extname) {
-        return cb(null, true);
-    } else {
-        cb('Error: Images only!');
-    }
-}
-
-// Handle POST request for profile picture upload
-app.post('/upload-profile-pic', (req, res) => {
-    upload(req, res, (err) => {
-        if (err) {
-            res.status(400).send(err);
-        } else {
-            if (req.file == undefined) {
-                res.status(400).send('Error: No file selected!');
-            } else {
-                // Here, you can save the file path in the database or perform any other necessary actions
-                res.status(200).send('File uploaded successfully!');
-            }
-        }
-    });
-});
-
-
-
-
-
 
 app.use(passport.initialize());
 app.use(passport.session());
