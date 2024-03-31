@@ -73,7 +73,7 @@
                                 <div class="friend-avatar"></div>
                                 <div class="friend-info">
                                     <p><%= friend.friend_username %></p>
-                                    <button class="message-btn">Message</button>
+                                    <button class="message-btn" onclick="openMessagePopOut('<%= friend.friend_username %>')">Message</button>
                                 </div>
                             </div>
                         <% }); %>
@@ -232,6 +232,16 @@
             alert(message);
         }
     </script>
+
+    <script>
+        function openMessagePopOut(username) {
+            // Redirect to the message page with the username as a query parameter
+            window.location.href = '/message?username=' + encodeURIComponent(username);
+        }
+    </script>
+
+
+
 
 </body>
 

@@ -81,10 +81,13 @@
 }
 
 
-/* Styling for friends list */
 .friends-container {
     display: flex;
     justify-content: center;
+    margin-top: 30px; /* Adjusted margin-top for closer proximity to the header */
+    padding: 10px; /* Adjusted padding for better spacing */
+    max-width: calc(100% - 20px); /* Adjusted max-width to prevent touching the walls */
+    width: calc(100% - 20px); /* Adjusted width to prevent touching the walls */
 }
 
 .friends-box {
@@ -92,14 +95,10 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
-    max-width: 900px;
+    max-width: 1300px;
     width: 100%;
-    margin-top: 100px; /* Increased margin-top to create space between header and box */
-}
-
-.friend-container {
-    max-height: 600px;
-    overflow-y: auto;
+    margin-left: auto; /* Centering the box horizontally */
+    margin-right: auto; /* Centering the box horizontally */
 }
 
 .friend-list {
@@ -146,3 +145,35 @@
 .message-btn:hover {
     background-color: #0056b3;
 }
+
+/* Keep your existing media query here */
+
+
+@media (max-width: 768px) {
+    .friends-box {
+        margin-top: 30px; /* Decreased margin-top for closer proximity to the header */
+        padding: 10px; /* Adjusted padding for better spacing */
+        max-width: calc(100% - 20px); /* Adjusted max-width to prevent touching the walls */
+        width: calc(100% - 20px); /* Adjusted width to prevent touching the walls */
+    }
+
+    .friend-list {
+        display: block; /* Change to block layout for mobile view */
+    }
+
+    .friend {
+        border: none; /* Remove border to improve spacing */
+        border-radius: 0; /* Remove border radius */
+        margin-bottom: 10px; /* Add bottom margin for separation between friends */
+        padding: 15px; /* Adjusted padding for better spacing */
+    }
+
+    .friend-info {
+        margin-left: 20px; /* Add margin between avatar and info for better alignment */
+    }
+
+    .message-dialog {
+        height: 90vh; /* Increased height for the message dialog in mobile view */
+    }
+}
+

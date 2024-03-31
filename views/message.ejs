@@ -121,45 +121,59 @@
         });
     </script>
 
-<script>
-    function openMessageDialog(username) {
-        document.getElementById('message-dialog').style.display = 'block';
-        document.getElementById('message-recipient').innerText = username;
-    }
+    <script>
+        function openMessageDialog(username) {
+            document.getElementById('message-dialog').style.display = 'block';
+            document.getElementById('message-recipient').innerText = username;
+        }
 
-    function closeMessageDialog() {
-        document.getElementById('message-dialog').style.display = 'none';
-    }
+        function closeMessageDialog() {
+            document.getElementById('message-dialog').style.display = 'none';
+        }
 
-    document.getElementById('message-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    const messageText = document.getElementById('message-text').value;
-    const recipient = document.getElementById('message-recipient').innerText;
-    // Here you can send the message using AJAX or any other method
-    // Example AJAX request:
-    // fetch('/send-message', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({ recipient: recipient, message: messageText })
-    // })
-    // .then(response => {
-    //     if (!response.ok) {
-    //         throw new Error('Failed to send message');
-    //     }
-    //     // Handle success
-    //     console.log('Message sent successfully');
-    // })
-    // .catch(error => {
-    //     console.error('Error sending message:', error);
-    //     // Handle error
-    // });
-    // For demonstration purposes, let's just log the message to the console
-    console.log('Message:', messageText);
-});
+        document.getElementById('message-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        const messageText = document.getElementById('message-text').value;
+        const recipient = document.getElementById('message-recipient').innerText;
+        // Here you can send the message using AJAX or any other method
+        // Example AJAX request:
+        // fetch('/send-message', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ recipient: recipient, message: messageText })
+        // })
+        // .then(response => {
+        //     if (!response.ok) {
+        //         throw new Error('Failed to send message');
+        //     }
+        //     // Handle success
+        //     console.log('Message sent successfully');
+        // })
+        // .catch(error => {
+        //     console.error('Error sending message:', error);
+        //     // Handle error
+        // });
+        // For demonstration purposes, let's just log the message to the console
+        console.log('Message:', messageText);
+    });
 
-</script>
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the username query parameter is present in the URL
+            const params = new URLSearchParams(window.location.search);
+            const username = params.get('username');
+            
+            // If the username is present, open the message pop-out for that user
+            if (username) {
+                openMessageDialog(username);
+            }
+        });
+    </script>
 
     <!-- Include any additional scripts if needed -->
 
