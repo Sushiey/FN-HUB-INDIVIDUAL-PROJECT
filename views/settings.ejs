@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/navigation.css"> 
     <link rel="stylesheet" href="/settings.css"> 
 
-    
     <link rel="stylesheet" href="/styles_index.css">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/settings.css">
@@ -27,16 +26,16 @@
                 <li><a href="/shop" id="shopLink">Item Shop</a></li>
                 <% if (loggedIn) { %>
                     <li><a href="/message" id="messageLink">Message</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
-                    <div class="dropdown-content">
-                        <a href="/profile">Profile</a>
-                        <a href="/settings">Settings</a>
-                        <a href="/logout">Logout</a>
-                    </div>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                        <div class="dropdown-content">
+                            <a href="/profile">Profile</a>
+                            <a href="/settings">Settings</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </li>
                 <% } else { %>
-                <li><a href="/login">Login</a></li>
+                    <li><a href="/login">Login</a></li>
                 <% } %>
             </ul>
         </nav>
@@ -48,16 +47,16 @@
                 <li><a href="/shop" id="shopLink">Item Shop</a></li>
                 <% if (loggedIn) { %>
                     <li><a href="/message" id="messageLink">Message</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Welcome, <%= username %></a>
-                    <div class="dropdown-content">
-                        <a href="/profile">Profile</a>
-                        <a href="/settings">Settings</a>
-                        <a href="/logout">Logout</a>
-                    </div>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Welcome, <%= username %></a>
+                        <div class="dropdown-content">
+                            <a href="/profile">Profile</a>
+                            <a href="/settings">Settings</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </li>
                 <% } else { %>
-                <li><a href="/login">Login</a></li>
+                    <li><a href="/login">Login</a></li>
                 <% } %>
             </ul>
         </nav>
@@ -84,6 +83,23 @@
                 </div>
             </form>
         </section>
+
+        <section id="profile-image" class="settings-box">
+            <h1>Profile Picture</h1>
+            <form id="profilePicForm" action="/upload-profile-pic" method="POST" enctype="multipart/form-data">
+                <div class="profile-image-container">
+                    <label for="profilePic">Current Profile Picture:</label>
+                    <img src="/path/to/current/profile/picture.jpg" alt="Current Profile Picture" id="currentProfilePic">
+                </div>
+                <div class="profile-image-upload">
+                    <label for="profilePic">Upload New Profile Picture:</label>
+                    <input type="file" id="profilePic" name="profilePic" accept="image/*">
+                    <button type="submit" class="upload-profile-btn">Upload</button>
+                </div>
+                <div id="uploadMessage" class="upload-message" style="display: none;"></div>
+            </form>
+        </section>
+        
     </main>
 
     <footer class="footer">
@@ -131,6 +147,32 @@
             event.preventDefault();
             this.submit();
             alert("Password change successful!");
+        });
+
+        document.getElementById("profilePicForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch("/upload-profile-pic", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("uploadMessage").textContent = "Profile picture uploaded successfully!";
+                    document.getElementById("uploadMessage").style.color = "green";
+                } else {
+                    document.getElementById("uploadMessage").textContent = "Error uploading profile picture!";
+                    document.getElementById("uploadMessage").style.color = "red";
+                }
+                document.getElementById("uploadMessage").style.display = "block";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("uploadMessage").textContent = "An error occurred. Please try again later.";
+                document.getElementById("uploadMessage").style.color = "red";
+                document.getElementById("uploadMessage").style.display = "block";
+            });
         });
     </script>
 </body>
