@@ -1,16 +1,19 @@
-# FN-HUB
-INDIVIDUAL PROJECT
+# FNHUB
+Individual Project | 6001CEM
 
-## Installation
+###  :file_folder: File Structure
 
-```bash
-Currently not here :D 
 ```
+
+
+```
+
+
+## :camera: Gallery
 
 ## Contributing
 
 This is an individual project so pull requests are not welcome. 
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+## :star2: Credit/Acknowledgment
+Luke Harrison | 11326601 | Student Covnetry University
